@@ -9,7 +9,5 @@ import javax.persistence.Id
 data class Empresa (
         val razaoSocial: String,
         val cnpj: String,
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: String? = null
+   @GeneratedValue(strategy = GenerationType.IDENTITY)   @Id val id: String? = null
 )

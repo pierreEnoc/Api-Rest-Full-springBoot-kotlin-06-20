@@ -14,7 +14,7 @@ data class Lancamento (
         val funcionarioId: String,
         val descricao: String? = "",
         val localizacao: String? = "",
-        @Id val id: String? = null
+        @GeneratedValue(strategy = GenerationType.IDENTITY) @Id val id: String? = null
 )
 
 
