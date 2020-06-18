@@ -1,6 +1,6 @@
 package com.pierre.Apirestfull.repository
 
-import com.pierre.Apirestfull.model.Funcinario
+import com.pierre.Apirestfull.model.Funcionario
 import com.pierre.Apirestfull.model.Lancamento
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

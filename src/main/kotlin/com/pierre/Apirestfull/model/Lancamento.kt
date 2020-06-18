@@ -9,12 +9,30 @@ import javax.persistence.Id
 
 @Entity
 data class Lancamento (
+        val data: Date,
+        val tipo: TipoEnum,
+        val funcionarioId: String,
+        val descricao: String? = "",
+        val localizacao: String? = "",
+        @Id val id: String? = null
+)
+
+
+/*
+* data class Lancamento(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: String? = null,
-        val data: Date,
-        val  tipoEnum: TipoEnum,
-        val funcinarioId: String,
-        val descricao: String ="",
-        val localizacao: String =""
+        val id: String ,
+        val data: TipoEnum,
+        val tipo: String,
+        val funcionarioId: String?,
+        val descricao: String? = "",
+        val localizacao: String? = ""
 )
+
+*
+*
+*
+*
+*
+* */
