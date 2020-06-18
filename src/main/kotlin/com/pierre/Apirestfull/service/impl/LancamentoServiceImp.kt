@@ -15,7 +15,7 @@ class LancamentoServiceImp (val lancamentoRepository: LancamentoRepository): Lan
         return lancamentoRepository.findAll(pageable)
     }
     
-    override fun buscarPorId(id: String): Lancamento? = lancamentoRepository.findByIdOrNull(id)
+    override fun buscarPorId(id: String): Lancamento? = lancamentoRepository.findById(id).orElse(null)
     
     override fun persistir(lancamento: Lancamento): Lancamento = lancamentoRepository.save(lancamento)
  
