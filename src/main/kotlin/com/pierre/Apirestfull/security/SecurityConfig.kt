@@ -1,9 +1,11 @@
 package com.pierre.Apirestfull.security
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import org.springframework.core.env.Environment
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -22,14 +24,16 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(val funcionarioDetailsService: FuncionarioDetailsService) : WebSecurityConfigurerAdapter() {
+ 
     
     override fun configure(auth: AuthenticationManagerBuilder?) {
         auth?.authenticationProvider(authenticationProvider())
     }
     
+    
     override fun configure(http: HttpSecurity?) {
         http?.authorizeRequests()?.
-        antMatchers("/api/cadastrar-pj", "/api/cadastrar-pf")?.
+        antMatchers("/api/lancamentos","/api/lancamentos/{id}", "/api/cadastrar-pj", "/api/cadastrar-pf")?.
         permitAll()?.
         anyRequest()?.
         authenticated()?.and()?.
@@ -44,10 +48,17 @@ class SecurityConfig(val funcionarioDetailsService: FuncionarioDetailsService) :
     /*
     override fun configure(http: HttpSecurity?) {
         http?.authorizeRequests()?.
-        anyRequest()?.authenticated()?.and()?.httpBasic()?.and()?.sessionManagement()?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)?.and()?.csrf()?.disable()
+        anyRequest()?.
+        authenticated()?.
+        and()?.
+        httpBasic()?.
+        and()?.
+        sessionManagement()?.
+        sessionCreationPolicy(SessionCreationPolicy.STATELESS)?.
+        and()?.csrf()?.disable()
     }
-    */
     
+    */
     
     @Bean
     fun authenticationProvider(): DaoAuthenticationProvider {

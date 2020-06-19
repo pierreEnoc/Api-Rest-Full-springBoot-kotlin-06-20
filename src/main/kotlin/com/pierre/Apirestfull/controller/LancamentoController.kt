@@ -7,13 +7,11 @@ import com.pierre.Apirestfull.model.Lancamento
 import com.pierre.Apirestfull.response.Response
 import com.pierre.Apirestfull.service.FuncionarioService
 import com.pierre.Apirestfull.service.LancamentoService
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.text.SimpleDateFormat
 import javax.validation.Valid
 
@@ -39,6 +37,58 @@ class LancamentoController(val lancamentoService: LancamentoService,
         return ResponseEntity.ok(response)
     }
     
+    
+    @GetMapping("/{id}")
+    fun listarPorId(@PathVariable("id") id: String): ResponseEntity<Response<LancamentoDto>>{
+        
+        val response: Response<LancamentoDto> = Response<LancamentoDto>()
+        val lancamento: Lancamento? = lancamentoService.buscarPorId(id)
+        
+        if(lancamento == null){
+            response.erros.add("Lançamento não encontrado para o id $id")
+            return ResponseEntity.badRequest().body(response)
+        }
+        
+        response.data = converterLancamentoDto(lancamento)
+        return ResponseEntity.ok(response)
+    }
+    
+    @PutMapping("/{id}")
+    fun atualizar(@PathVariable("id") id: String, @Valid @RequestBody lancamentoDto: LancamentoDto,
+                  result: BindingResult): ResponseEntity<Response<LancamentoDto>>{
+        
+        val response: Response<LancamentoDto> = Response<LancamentoDto>()
+        validarFuncionario(lancamentoDto, result)
+        lancamentoDto.id = id
+        
+        var lancamento: Lancamento = converterDtoParaLancamento(lancamentoDto, result)
+        
+        if(result.hasErrors()){
+            for(erro in result.allErrors) response.erros.add(erro.defaultMessage!!)
+            return ResponseEntity.badRequest().body(response)
+        }
+        
+        lancamento = lancamentoService.persistir(lancamento)
+        response.data = converterLancamentoDto(lancamento)
+        return ResponseEntity.ok(response)
+    }
+    
+    @DeleteMapping("/{id}")
+   // @PreAuthorize("hasAnyRole('ADMIN')")
+    fun remover(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
+        
+        val response: Response<String> = Response<String>()
+        val lancamento: Lancamento? = lancamentoService.buscarPorId(id)
+        
+        if(lancamento == null){
+            response.erros.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+            return ResponseEntity.badRequest().body(response)
+        }
+        
+        lancamentoService.remover(id)
+        return ResponseEntity.ok(response)
+        
+    }
     
     /**
      * private fun ṕara converter Lancamento para LancamentoDto

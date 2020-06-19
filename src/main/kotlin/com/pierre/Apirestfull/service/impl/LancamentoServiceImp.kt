@@ -4,9 +4,7 @@ import com.pierre.Apirestfull.model.Lancamento
 import com.pierre.Apirestfull.repository.LancamentoRepository
 import com.pierre.Apirestfull.service.LancamentoService
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service

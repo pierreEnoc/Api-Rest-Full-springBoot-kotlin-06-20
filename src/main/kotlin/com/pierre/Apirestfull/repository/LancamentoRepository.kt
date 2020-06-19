@@ -7,6 +7,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface LancamentoRepository : JpaRepository <Lancamento, String>{
- //   fun findByFuncinarioId(pageable: Pageable): Page<Lancamento>
+  //  fun findByFuncinarioId(pageable: Pageable): Page<Lancamento>
  
 }

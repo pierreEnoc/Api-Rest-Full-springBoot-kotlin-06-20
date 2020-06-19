@@ -10,12 +10,16 @@ import com.pierre.Apirestfull.utils.SenhaUtils
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 //@SpringBootApplication
 //class ApiRestFullApplication
 
 @SpringBootApplication
-class ApiRestFullApplication(val empresaRepository: EmpresaRepository,
+//@EnableWebMvc
+class ApiRestFullApplication
+
+(val empresaRepository: EmpresaRepository,
 								  val funcionarioRepository: FuncionarioRepository,
 								  val lancamentoRepository: LancamentoRepository): CommandLineRunner {
 	
@@ -40,7 +44,10 @@ class ApiRestFullApplication(val empresaRepository: EmpresaRepository,
 		System.out.println("Funcionario ID: " + funcionario.id)
 		
 	}
+	
+
 }
+
 
 fun main(args: Array<String>) {
 	runApplication<ApiRestFullApplication>(*args)
